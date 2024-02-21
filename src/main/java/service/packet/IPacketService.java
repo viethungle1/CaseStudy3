@@ -1,9 +1,11 @@
-package service.book;
+package service.packet;
+
 import model.Book;
+
 import java.sql.SQLException;
 import java.util.List;
 
-public interface IBookService {
+public interface IPacketService {
     List<Book> findAll();
     public Book selectBook(int id) throws SQLException;
     public void save(Book book, int[] categories);

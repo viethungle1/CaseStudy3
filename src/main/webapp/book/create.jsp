@@ -20,6 +20,10 @@
                 <td><input type="text" name="author" size="45px"></td>
             </tr>
             <tr>
+                <th>Price:</th>
+                <td><input type="text" name="price" size="45px"></td>
+            </tr>
+            <tr>
                 <th>Category: </th>
                 <td>
                     <select name="categories" multiple>
@@ -32,9 +36,6 @@
             <tr>
                 <td>
                     <button type="submit">Save</button>
-                </td>
-                <td>
-                    <button type="submit"><a style="text-decoration: none" href="/">Back to Home Page</a></button>
                 </td>
             </tr>
         </table>

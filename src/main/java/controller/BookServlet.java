@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Dictionary;
 import java.util.List;
 
 @WebServlet(urlPatterns = "/")
@@ -27,14 +29,36 @@ public class BookServlet extends HttpServlet {
                 case "create":
                     showFormCreate(req, resp);
                     break;
+                case "edit":
+                    showEditForm(req,resp);
+                    break;
+                case "search":
+                    searchBook(req,resp);
+                    break;
                 case "delete":
                     deleteBook(req, resp);
+                    break;
                 default:
                     showData(req, resp);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+    private void searchBook(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String nameSearch = "%"+req.getParameter("search")+"%";
+        List<Book> list = bookService.findByName(nameSearch);
+        req.setAttribute("searchResult",list);
+        RequestDispatcher dispatcher = req.getRequestDispatcher("book/search.jsp");
+        dispatcher.forward(req,resp);
+    }
+
+    private void showEditForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
+        int id = Integer.parseInt(req.getParameter("id"));
+        req.setAttribute("categories",categoryService.showList());
+        req.setAttribute("book",bookService.selectBook(id));
+        RequestDispatcher dispatcher = req.getRequestDispatcher("book/edit.jsp");
+        dispatcher.forward(req,resp);
     }
 
     private void showData(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -62,22 +86,44 @@ public class BookServlet extends HttpServlet {
         if (action==null){
             action="";
         }
-        switch (action) {
-            case "create":
-                createNewBook(req, resp);
-                break;
+        try {
+            switch (action) {
+                case "create":
+                    createNewBook(req, resp);
+                    break;
+                case "edit":
+                    editBook(req, resp);
+                    break;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
+
+    private void editBook(HttpServletRequest req, HttpServletResponse resp) throws SQLException {
+        int id = Integer.parseInt(req.getParameter("id"));
+        String name = req.getParameter("name");
+        String author = req.getParameter("author");
+        int price = Integer.parseInt(req.getParameter("price"));
+        String[] categoriesStr = req.getParameterValues("categories");
+        int[] categories = new int[categoriesStr.length];
+        for (int i = 0; i < categoriesStr.length; i++) {
+            categories[i] = Integer.parseInt(categoriesStr[i]);
+        }
+        Book book = new Book(name, author, price);
+        bookService.edit(id, book, categories);
+    }
+
     private void createNewBook(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("name");
         String author = req.getParameter("author");
-        String description = req.getParameter("description");
+        int price = Integer.parseInt(req.getParameter("price"));
         String [] categoriesStr = req.getParameterValues("categories");
         int [] categories = new int[categoriesStr.length];
         for (int i = 0; i < categoriesStr.length; i++) {
             categories[i] = Integer.parseInt(categoriesStr[i]);
         }
-        Book book = new Book(name,author,description);
+        Book book = new Book(name,author,price);
         bookService.save(book,categories);
         RequestDispatcher dispatcher = req.getRequestDispatcher("book/create.jsp");
         dispatcher.forward(req,resp);

@@ -11,29 +11,12 @@
 <body>
 <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Book Manager</a>
+        <a class="navbar-brand" href="/"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
+            <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5"/>
+        </svg></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Menu
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="?action=create">Create</a></li>
-                        <li><a class="dropdown-item" href="#">....</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <form class="d-flex" role="search">
-                <input type="hidden" value="search"/>
-                <input type="hidden" name="action" value="search"/>
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
-                <button class="btn btn-outline-dark" type="submit">Search</button>
-            </form>
-        </div>
     </div>
 </nav>
 <br>
@@ -50,7 +33,7 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${list}" var="b">
+        <c:forEach items="${searchResult}" var="b">
             <tr>
                 <td>${b.id}</td>
                 <td>${b.name}</td>
