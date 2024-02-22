@@ -34,6 +34,24 @@ public class BookService implements IBookService {
         }
         return bookList;
     }
+    @Override
+    public List<Book> showList() {
+        List<Book> books = new ArrayList<>();
+        try {
+            PreparedStatement statement = c.prepareStatement("select * from book;");
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String author = rs.getString("author");
+                int price = rs.getInt("price");
+                books.add(new Book(id,name,author,price));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return books;
+    }
     public List<Book> findByName(String nameSearch) {
         List<Book> bookList = new ArrayList<>();
         try {
@@ -142,6 +160,19 @@ public class BookService implements IBookService {
             statement2.setInt(2,id_category);
             statement2.executeUpdate();
         }
+    }
+    public List<Book> fillPrice(int id_bill) throws SQLException {
+        List<Book> books = new ArrayList<>();
+        PreparedStatement statement = c.prepareStatement("select b.name, b.price from book b join bill_book bb on b.id = bb.id_book and bb.id_bill = ?;");
+        statement.setInt(1,id_bill);
+        ResultSet rs = statement.executeQuery();
+        while (rs.next()) {
+            String name = rs.getString("name");
+            int price = rs.getInt("price");
+            Book book = new Book(name,price);
+            books.add(book);
+        }
+        return books;
     }
 }
 

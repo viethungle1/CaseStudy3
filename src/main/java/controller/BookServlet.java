@@ -37,6 +37,7 @@ public class BookServlet extends HttpServlet {
                     break;
                 case "delete":
                     deleteBook(req, resp);
+                    showData(req, resp);
                     break;
                 default:
                     showData(req, resp);
@@ -45,6 +46,8 @@ public class BookServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
+
+
     private void searchBook(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String nameSearch = "%"+req.getParameter("search")+"%";
         List<Book> list = bookService.findByName(nameSearch);
@@ -90,9 +93,11 @@ public class BookServlet extends HttpServlet {
             switch (action) {
                 case "create":
                     createNewBook(req, resp);
+                    showData(req, resp);
                     break;
                 case "edit":
                     editBook(req, resp);
+                    showData(req, resp);
                     break;
             }
         } catch (SQLException e) {
@@ -100,7 +105,7 @@ public class BookServlet extends HttpServlet {
         }
     }
 
-    private void editBook(HttpServletRequest req, HttpServletResponse resp) throws SQLException {
+    private void editBook(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
         String name = req.getParameter("name");
         String author = req.getParameter("author");
@@ -125,8 +130,6 @@ public class BookServlet extends HttpServlet {
         }
         Book book = new Book(name,author,price);
         bookService.save(book,categories);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("book/create.jsp");
-        dispatcher.forward(req,resp);
     }
 
 }

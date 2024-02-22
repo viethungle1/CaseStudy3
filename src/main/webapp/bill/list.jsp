@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
-    <title>Add New Book</title>
+    <title>List</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
@@ -17,41 +17,34 @@
         </button>
     </div>
 </nav>
-<div>
-    <form method="post">
-        <fieldset>
-            <legend>Create New Book</legend>
-        <table>
+    <table class="table">
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">TÊN KHÁCH HÀNG</th>
+            <th scope="col">ĐIỆN THOẠI</th>
+            <th scope="col">ĐỊA CHỈ</th>
+<%--            <th>SỐ LƯỢNG</th>--%>
+            <th scope="col">SẢN PHẨM</th>
+            <th scope="col">THÀNH TIỀN</th>
+        </tr>
+        <c:forEach items="${list}" var="b">
             <tr>
-                <td>Book Name:</td>
-                <td><input type="text" name="name" size="45px"></td>
-            </tr>
-            <tr>
-                <td>Author:</td>
-                <td><input type="text" name="author" size="45px"></td>
-            </tr>
-            <tr>
-                <td>Price:</td>
-                <td><input type="text" name="price" size="45px"></td>
-            </tr>
-            <tr>
-                <td>Category: </td>
+                <td>${b.id}</td>
+                <td>${b.name}</td>
+                <td>${b.phone}</td>
+                <td>${b.address}</td>
+<%--                <td>${b.quantity}</td>--%>
                 <td>
-                    <select name="categories" multiple>
-                        <c:forEach items="${categories}" var="c">
-                            <option value="${c.id}">${c.name}</option>
-                        </c:forEach>
-                    </select>
+                    <c:forEach items="${b.books}" var="c">
+                        <span>${c.name}</span>
+                        <br>
+                        <span>${c.price}/cuốn</span>
+                        <br>
+                    </c:forEach>
                 </td>
+                <td>${b.getTotalprice()}</td>
             </tr>
-            <tr>
-                <td>
-                    <button type="submit">Save</button>
-                </td>
-            </tr>
-        </table>
-        </fieldset>
-    </form>
-</div>
+        </c:forEach>
+    </table>
 </body>
 </html>

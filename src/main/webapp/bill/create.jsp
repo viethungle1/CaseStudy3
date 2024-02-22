@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
-    <title>Add New Book</title>
+    <title>Create New Customer</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
@@ -20,26 +20,30 @@
 <div>
     <form method="post">
         <fieldset>
-            <legend>Create New Book</legend>
+            <legend>Create New Order</legend>
         <table>
             <tr>
-                <td>Book Name:</td>
+                <th>Name:</th>
                 <td><input type="text" name="name" size="45px"></td>
             </tr>
             <tr>
-                <td>Author:</td>
-                <td><input type="text" name="author" size="45px"></td>
+                <th>Phone:</th>
+                <td><input type="text" name="phone" size="45px"></td>
             </tr>
             <tr>
-                <td>Price:</td>
-                <td><input type="text" name="price" size="45px"></td>
+                <th>Address:</th>
+                <td><input type="text" name="address" size="45px"></td>
             </tr>
             <tr>
-                <td>Category: </td>
+                <th>Quantity:</th>
+                <td><input type="text" name="quantity" size="45px"></td>
+            </tr>
+            <tr>
+                <th>Book: </th>
                 <td>
-                    <select name="categories" multiple>
-                        <c:forEach items="${categories}" var="c">
-                            <option value="${c.id}">${c.name}</option>
+                    <select name="books" multiple>
+                        <c:forEach items="${books}" var="b">
+                            <option  value="${b.id}">${b.name} - ${b.price}$</option>
                         </c:forEach>
                     </select>
                 </td>

@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>Minitest_3</title>
+    <title></title>
 </head>
 <body>
 <center>
